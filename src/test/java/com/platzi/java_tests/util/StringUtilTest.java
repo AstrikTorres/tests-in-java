@@ -3,14 +3,21 @@ package com.platzi.java_tests.util;
 public class StringUtilTest {
     public static void main(String[] args) {
 
-        String result = StringUtil.repeat("Hello", 3);
-        if (!result.equals("HelloHelloHello")) {
-            System.err.println("ERROR");
-        }
+        myAssertEquals(
+                StringUtil.repeat("Hello", 3),
+                "HelloHelloHello"
+        );
 
-        String result2 = StringUtil.repeat("Hello", 2);
-        if (!result2.equals("HelloHello")) {
-            System.err.println("ERROR");
+        // exception
+        myAssertEquals(
+                StringUtil.repeat("Hello", 2),
+                "Hello2"
+        );
+    }
+
+    private static void myAssertEquals(String actual, String expected) {
+        if (!actual.equals(expected)) {
+            throw new RuntimeException(actual + " is not equal to expected:  " + expected);
         }
     }
 
