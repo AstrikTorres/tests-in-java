@@ -1,24 +1,24 @@
 package com.platzi.java_tests.util;
 
-public class StringUtilTest {
-    public static void main(String[] args) {
+import org.junit.Test;
 
-        myAssertEquals(
-                StringUtil.repeat("Hello", 3),
-                "HelloHelloHello"
+import static org.junit.Assert.assertEquals;
+
+public class StringUtilTest {
+
+    @Test
+    public void testStringRepeat() {
+
+        assertEquals(
+                "HelloHelloHello",
+                StringUtil.repeat("Hello", 3)
         );
 
         // exception
-        myAssertEquals(
-                StringUtil.repeat("Hello", 2),
-                "Hello2"
+        assertEquals(
+                "Hello2",
+                StringUtil.repeat("Hello", 2)
         );
-    }
-
-    private static void myAssertEquals(String actual, String expected) {
-        if (!actual.equals(expected)) {
-            throw new RuntimeException(actual + " is not equal to expected:  " + expected);
-        }
     }
 
 }
