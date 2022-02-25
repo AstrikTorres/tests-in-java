@@ -28,4 +28,10 @@ public class StringUtilTest {
         assertEquals("", StringUtil.repeat("Hello", 0));
     }
 
+    // exception expected when times are negative
+    @Test(expected = IllegalArgumentException.class)
+    public void repeatStringNegativeTimes() {
+        StringUtil.repeat("Hello", -1);
+    }
+
 }
