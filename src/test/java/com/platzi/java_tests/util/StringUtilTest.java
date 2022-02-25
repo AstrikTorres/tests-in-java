@@ -7,18 +7,25 @@ import static org.junit.Assert.assertEquals;
 public class StringUtilTest {
 
     @Test
-    public void testStringRepeat() {
-
+    public void repeatStringOnce() {
         assertEquals(
-                "HelloHelloHello",
-                StringUtil.repeat("Hello", 3)
+                "Hello",
+                StringUtil.repeat("Hello", 1)
         );
+    }
 
+    @Test
+    public void repeatStringMultipleTimes() {
         // exception
         assertEquals(
-                "Hello2",
+                "HelloHello",
                 StringUtil.repeat("Hello", 2)
         );
+    }
+
+    @Test
+    public void repeatStringZeroTimes() {
+        assertEquals("", StringUtil.repeat("Hello", 0));
     }
 
 }
