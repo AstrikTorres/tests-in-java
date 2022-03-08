@@ -22,4 +22,25 @@ public class DateUtilIsLeapYearShould {
         assertTrue( isLeapYear(2400) );
     }
 
+    @Test
+    public void returnFalseWhenYearIsNotDivisibleBy400() {
+        assertFalse( isLeapYear(1700) );
+        assertFalse( isLeapYear(1800) );
+        assertFalse( isLeapYear(1900) );
+    }
+
+    @Test
+    public void returnTrueWhenYearIsDivisibleBy4ButNotBy100() {
+        assertTrue( isLeapYear(1996) );
+        assertTrue( isLeapYear(2004) );
+        assertTrue( isLeapYear(2008) );
+    }
+
+    @Test
+    public void returnFalseWhenYearIsNotDivisibleBy4() {
+        assertFalse( isLeapYear(2017) );
+        assertFalse( isLeapYear(2018) );
+        assertFalse( isLeapYear(2019) );
+    }
+
 }
