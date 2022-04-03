@@ -28,4 +28,15 @@ public class MovieService {
                 .filter(m -> m.getMinutes() <= length)
                     .collect(Collectors.toList());
     }
+
+    public Collection<Movie> findByName(String name) {
+
+        String nameMovie = name.toUpperCase().charAt(0) +
+                name.substring(1, name.length()).toLowerCase();
+
+        return movieRepository.findAll().stream()
+                .filter(m -> m.getName().contains(nameMovie))
+                        .collect(Collectors.toList()
+                );
+    }
 }
