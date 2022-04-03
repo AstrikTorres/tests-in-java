@@ -1,5 +1,7 @@
 package com.platzi.java_tests.movies.model;
 
+import java.util.Objects;
+
 public class Movie {
 
     private static Integer idCounterMovie;
@@ -13,7 +15,7 @@ public class Movie {
     private int minutes;
     private Genre genre;
 
-    public Movie(String name, int minutes, Genre genre) {
+    public Movie(int minutes, String name, Genre genre) {
         this(idCounterMovie++, name, minutes, genre);
     }
 
@@ -64,4 +66,16 @@ public class Movie {
         this.genre = genre;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return minutes == movie.minutes && Objects.equals(id, movie.id) && Objects.equals(name, movie.name) && genre == movie.genre;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, minutes, genre);
+    }
 }
