@@ -2,6 +2,9 @@ package com.platzi.java_tests.movies.data;
 
 import com.platzi.java_tests.movies.model.Genre;
 import com.platzi.java_tests.movies.model.Movie;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,6 +14,7 @@ import org.springframework.jdbc.datasource.init.ScriptUtils;
 import javax.sql.DataSource;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -19,19 +23,25 @@ import static org.junit.Assert.*;
 
 public class MovieRepositoryIntegrationTest {
 
-    @Test
-    public void loadAllMovies() throws SQLException {
+    private MovieRepositoryJdbc movieRepository;
+    private DataSource dataSource;
 
-        DataSource datasource =
+    @Before
+    public void setUp() throws Exception {
+         dataSource =
                 new DriverManagerDataSource(
                         "jdbc:h2:mem:test;MODE=MYSQL", "sa", "sa"
                 );
 
-        ScriptUtils.executeSqlScript(datasource.getConnection(), new ClassPathResource("sql-scripts/test-data.sql"));
+        ScriptUtils.executeSqlScript(dataSource.getConnection(), new ClassPathResource("sql-scripts/test-data.sql"));
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(datasource);
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-        MovieRepository movieRepository = new MovieRepositoryJdbc(jdbcTemplate);
+        movieRepository = new MovieRepositoryJdbc(jdbcTemplate);
+    }
+
+    @Test
+    public void loadAllMovies() throws SQLException {
 
         Collection<Movie> movies = movieRepository.findAll();
         List<Movie> list = Arrays.asList(
@@ -41,6 +51,19 @@ public class MovieRepositoryIntegrationTest {
         );
         assertEquals(movies,list);
 
+    }
 
+    @Test
+    public void loadMovieById() {
+        Movie movie = movieRepository.findById(2);
+
+        assertEquals(new Movie(2, "Memento", 113, Genre.THRILLER), movie);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+
+        final Statement s = dataSource.getConnection().createStatement();
+        s.execute("drop all objects delete files");
     }
 }
