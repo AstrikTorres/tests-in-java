@@ -49,7 +49,7 @@ public class MovieServiceTest {
 
     @Test
     public void returnMoviesByGenre() {
-        Collection<Movie> movies = movieService.findMoviesByGenre(Genre.COMEDY);
+        Collection<Movie> movies = movieService.findMoviesByGenre(COMEDY);
 
         assertThat(getMoviesIds(movies), CoreMatchers.is(Arrays.asList(3, 6, 9)));
     }
@@ -59,6 +59,43 @@ public class MovieServiceTest {
         Collection<Movie> movies = movieService.findMoviesByLength(119);
 
         assertThat(getMoviesIds(movies), CoreMatchers.is(Arrays.asList(2, 3, 4, 5, 6, 9)));
+    }
+
+    @Test
+    public void returnMoviesByAttributesId() {
+        Integer id = 2;
+        String name = null; // no queremos buscar por nombre
+        Integer minutes = null; // 1h 40m
+        Genre genre = null;
+        Movie template = new Movie(id, name, minutes, genre);
+        Collection<Movie> movies =
+                movieService.findByTemplate(template);
+
+        assertThat(getMoviesIds(movies), CoreMatchers.is(Arrays.asList(2)));
+    }
+
+    @Test
+    public void returnMoviesByAttributesMinutesGenre() {
+        String name = null; // no queremos buscar por nombre
+        Integer minutes = 103; // 1h 40m
+        Genre genre = COMEDY;
+        Movie template = new Movie(name, minutes, genre);
+        Collection<Movie> movies =
+                movieService.findByTemplate(template);
+
+        assertThat(getMoviesIds(movies), CoreMatchers.is(Arrays.asList(6, 9)));
+    }
+
+    @Test
+    public void returnMoviesByAttributesMinutesName() {
+        String name = "super"; // no queremos buscar por nombre
+        Integer minutes = 112; // 1h 40m
+        Genre genre = null;
+        Movie template = new Movie(name, minutes, genre);
+        Collection<Movie> movies =
+                movieService.findByTemplate(template);
+
+        assertThat(getMoviesIds(movies), CoreMatchers.is(Arrays.asList(4, 9)));
     }
 
     private List<Integer> getMoviesIds(Collection<Movie> movies) {
