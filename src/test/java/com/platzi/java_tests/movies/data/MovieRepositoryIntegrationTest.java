@@ -66,6 +66,7 @@ public class MovieRepositoryIntegrationTest {
         movieRepository.saveOrUpdate(movie);
 
         Movie movieFromDb = movieRepository.findById(4);
+        movie.setId(4);
 
         assertEquals(movie, movieFromDb);
     }
