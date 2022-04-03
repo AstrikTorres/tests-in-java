@@ -15,8 +15,8 @@ public class Movie {
     private int minutes;
     private Genre genre;
 
-    public Movie(int minutes, String name, Genre genre) {
-        this(idCounterMovie++, name, minutes, genre);
+    public Movie(String name, int minutes, Genre genre) {
+        this(null, name, minutes, genre);
     }
 
     public Movie(Integer id, String name, int minutes, Genre genre) {

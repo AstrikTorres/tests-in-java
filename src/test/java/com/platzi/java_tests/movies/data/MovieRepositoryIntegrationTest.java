@@ -60,6 +60,16 @@ public class MovieRepositoryIntegrationTest {
         assertEquals(new Movie(2, "Memento", 113, Genre.THRILLER), movie);
     }
 
+    @Test
+    public void insertAMovie() {
+        Movie movie = new Movie("Super 8", 112, Genre.THRILLER);
+        movieRepository.saveOrUpdate(movie);
+
+        Movie movieFromDb = movieRepository.findById(4);
+
+        assertEquals(movie, movieFromDb);
+    }
+
     @After
     public void tearDown() throws Exception {
 
